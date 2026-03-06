@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: markdown-search
+
+# Mock向量生成开关
+# true: 使用本地Mock生成向量(无需外部API)
+# false: 调用外部Embedding API
+mock:
+  embedding-enabled: true
+
+elasticsearch:
+  host: localhost
+  port: 9200
+  scheme: http
+
+mdsearch:
+  index:
+    name: markdown_docs
+  search:
+    bm25-weight: 0.4
+    title-vector-weight: 0.3
+    content-vector-weight: 0.3
+    size: 10
+  directory:
+    scan-interval: 60000
+    exclude-patterns:
+      - node_modules
+      - .git
+      - target
+  # 外部API配置 (当 mock.embedding-enabled=false 时使用)
+  embedding:
+    api-url: https://api.openai.com/v1/embeddings
+    api-key: sk-your-api-key-here
+    model: text-embedding-ada-002
+    dimension: 1536
+    timeout: 30000
+
+logging:
+  level:
+    root: INFO
+    com.example.mdsearch: DEBUG
