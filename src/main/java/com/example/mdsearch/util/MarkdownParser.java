@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class MarkdownParser {
     }
 
     public static String readFileContent(String filePath) throws IOException {
-        return new String(Files.readAllBytes(Path.of(filePath)));
+        return new String(Files.readAllBytes(Paths.get(filePath)));
     }
 
     public static String calculateHash(String content) {
@@ -55,7 +56,7 @@ public class MarkdownParser {
 
     public static List<String> scanMarkdownFiles(String directoryPath) throws IOException {
         List<String> mdFiles = new ArrayList<>();
-        Path startPath = Path.of(directoryPath);
+        Path startPath = Paths.get(directoryPath);
 
         if (!Files.exists(startPath)) {
             throw new IOException("Directory does not exist: " + directoryPath);
